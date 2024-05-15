@@ -15,7 +15,7 @@ class Graph:
         for _ in range(n):
             rnd1 = random.randint(0,len(self.nodes)-1)
             rnd2 = random.randint(0,len(self.nodes)-1)
-            print(str(rnd1) + " " + str(rnd2))
+            
             self.nodes[rnd1].add_child(self.nodes[rnd2])
 
     def plot_graph(self) -> None:
@@ -26,6 +26,15 @@ class Graph:
         networkx.draw_networkx_nodes(self.G,pos,cmap=plt.get_cmap("jet"),node_size=500)
         networkx.draw_networkx_labels(self.G,pos)
         networkx.draw_networkx_edges(self.G,pos)
+
+    def get_as_dictionary(self):
+        n_dict = {}
+        for node in self.nodes:
+            children = []
+            for child in node.children:
+                children.append(child.name)
+            n_dict[node.name] = children
+        return n_dict
 
 class Node:
     def __init__(self,index) -> None:
