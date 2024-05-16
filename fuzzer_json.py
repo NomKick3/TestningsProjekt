@@ -20,14 +20,6 @@ def random_structure_generator(arg):
     return another_one
 
 def cykled_lst(arg, lst=[],num=10,first = []): #random.randint(0, 1000)
-    # if arg == num:
-    #     lst.append(arg)
-    # else:
-    #     lst.append(arg)
-    #     lst.append([])
-    #     cykled_lst(arg+1, lst[1], num, first)
-    #     return lst
-
     t1_list = lst
     t1_list.append(0)
     t1_list.append([])
@@ -82,7 +74,7 @@ def random_number():
             multiplier += random.randint(lower_limit,upper_limit)
             yield n1/n2
 
-def check_equal(list1,list2):
+def check_equal_list(list1,list2):
     if len(list1) != len(list2): return False
     if list1[0] != list2[0]: return False
     t1_list, t2_list = list1[1], list2[1]
@@ -90,12 +82,16 @@ def check_equal(list1,list2):
         print(t1_list[0])
         if t1_list[0] != t2_list[0]: return False
         t1_list, t2_list = t1_list[1], t2_list[1]
-
     return True
 
-list = cykled_lst(0)
+def check_equal_dict(dict1,dict2):
+    
+    pass
 
-if check_equal(list,list):
-    print("Amanda är kass")
-else:
-    print("Amanda är fortfarande kass")
+if __name__ == "__main__":
+    list = cykled_lst(0)
+
+    if check_equal_list(list,list):
+        print("Amanda är kass")
+    else:
+        print("Amanda är fortfarande kass")

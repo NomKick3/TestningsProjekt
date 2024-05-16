@@ -1,5 +1,5 @@
 import pickle
-from Graph import Graph
+from graph import Graph
 import matplotlib.pyplot as plt
 import sys
 
