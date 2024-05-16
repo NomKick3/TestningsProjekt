@@ -35,6 +35,7 @@ class Graph:
                 children.append(child.name)
             n_dict[node.name] = children
         return n_dict
+        
 
 class Node:
     def __init__(self,index) -> None:
