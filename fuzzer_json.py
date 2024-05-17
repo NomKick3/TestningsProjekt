@@ -2,7 +2,7 @@ import random
 import sys
 
 def random_number_generator(arg): 
-    number = random.randint(10**arg,10**arg+1)/random.randint(arg+1**26,arg+1**27)
+    number = random.randint(1,1000)/random.randint(1,10000)
     return number
 
 def random_string_generator(arg):
@@ -10,6 +10,12 @@ def random_string_generator(arg):
     for _ in range(random.randint(0,1000)):
             string.join(random.choice("1234567890!#¤%&/()=?`@£$€{[]}`^*¨'~qwertyuiopåasdfghjklöäzxcvbnmQWERTYUIOPÅASDFGHJKLÖÄZXCVBNM,;.:-_><|§½\n\t\r'*+?"))
     return string
+
+def random_list_generator(arg):
+    lst = []
+    for _ in range(random.randint(0,5)):
+        lst.append(functions[random.randint(0,len(functions)-1)](0))
+    return lst
 
 def random_structure_generator(arg):
     global highest_depth
@@ -43,7 +49,7 @@ def cykled_dict(arg, dic={}, num=random.randint(0, 10)):
     return dic
 
     
-functions = [cykled_lst] # random_string_generator, random_structure_generator, cykled_dict
+functions = [random_string_generator, random_structure_generator, random_number_generator, random_list_generator] 
 
 def random_data_generator():
     global highest_depth
@@ -99,4 +105,6 @@ def check_equal_dict(dict1, dict2):
 
 
 if __name__ == "__main__":
-    pass
+    global highest_depth
+    highest_depth = 0
+    print(random_list_generator(0))
