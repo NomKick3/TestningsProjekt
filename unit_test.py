@@ -197,7 +197,7 @@ class unit_tests(unittest.TestCase):
             # Deserialize the object from the file
             loaded_data6 = pickle.load(file6)
 
-        self.assertEqual(tuple4, loaded_data4)
+        self.assertEqual(tuple6, loaded_data6)
             
     def test_sets(self):
         pass
