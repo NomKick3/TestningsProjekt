@@ -12,9 +12,14 @@ def random_string_generator(arg):
     return string
 
 def random_list_generator(arg):
-    lst = []
-    for _ in range(random.randint(0,5)):
-        lst.append(functions[random.randint(0,len(functions)-1)](0))
+    global highest_depth
+    if arg > highest_depth: highest_depth = arg
+    if arg >= 10:
+        lst = "END"
+    else:
+        lst = []
+        for _ in range(random.randint(0,5)):
+            lst.append(functions[random.randint(0,len(functions)-1)](arg+1))
     return lst
 
 def random_structure_generator(arg):
