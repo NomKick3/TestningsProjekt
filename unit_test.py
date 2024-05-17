@@ -71,7 +71,7 @@ class unit_tests(unittest.TestCase):
 
     def test_list(self):
         empty_list = []
-        random_list = [random.randint(0, 100) for _ in range(10)]
+        random_list = [random.randint(0, 100) for i in range(10)]
         same_value_list = [5] * 10
         sorted_list = sorted([3, 1, 4, 1, 5, 9, 2, 6]) 
         mixed_list = [1, 'apple', 3.14, True, None]
@@ -95,6 +95,14 @@ class unit_tests(unittest.TestCase):
         if(loaded == original):
             return True
         return False  
+    
+    def test_pick_pickle(self):
+        lst = [1, 'apple', 3.14, True, None]
+        pickled = pickle.dumps(lst)
+        second_pickled = pickle.dumps(pickled)
+        loaded = pickle.loads(second_pickled)
+        second_loaded = pickle.loads(loaded)
+        self.assertEqual(lst, second_loaded)
     
     def test_dict(self):
         dict1 = {}
@@ -200,6 +208,7 @@ class unit_tests(unittest.TestCase):
 
         self.assertEqual(tuple6, loaded_data6)
             
+    
     def test_sets(self):
         s1 = {"Random","Rando","Randy"}
         with open('data.pkl', 'wb') as file:
