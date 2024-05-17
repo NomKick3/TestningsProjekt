@@ -3,6 +3,7 @@ import fuzzer_json
 import pickle
 import os
 import nested_class
+import random
 
 class unit_tests(unittest.TestCase):
     def test_cycle_list(self):
@@ -69,11 +70,136 @@ class unit_tests(unittest.TestCase):
         os.remove("data.pkl")
 
     def test_list(self):
-        pass
+        empty_list = []
+        random_list = [random.randint(0, 100) for _ in range(10)]
+        same_value_list = [5] * 10
+        sorted_list = sorted([3, 1, 4, 1, 5, 9, 2, 6]) 
+        mixed_list = [1, 'apple', 3.14, True, None]
+        nested_list = [[1, 2, 3], ['a', 'b', 'c'], [True, False]]
+        large_list = list(range(10000))
+        negative_list = [-1, -5, -10, -15, -20]
+
+         # Compare pickled lists
+        self.assertTrue(self.compare_pickled(empty_list), "Empty list pickling failed")
+        self.assertTrue(self.compare_pickled(random_list), "Random list pickling failed")
+        self.assertTrue(self.compare_pickled(same_value_list), "Same value list pickling failed")
+        self.assertTrue(self.compare_pickled(sorted_list), "Sorted list pickling failed")
+        self.assertTrue(self.compare_pickled(mixed_list), "Mixed list pickling failed")
+        self.assertTrue(self.compare_pickled(nested_list), "Nested list pickling failed")
+        self.assertTrue(self.compare_pickled(large_list), "Large list pickling failed")
+        self.assertTrue(self.compare_pickled(negative_list), "Negative list pickling failed")       
+
+    def compare_pickled(original):
+        pickled = pickle.dumps(original)
+        loaded = pickle.loads(pickled)
+        if(loaded == original):
+            return True
+        return False  
     
     def test_dict(self):
-        pass
-    
+        dict1 = {}
+        dict2 = {'string': 'test', 1:0, 'int': 1, 'float': 1.5, 'bool': True, 'Nan': None}
+        dict3 = {'list': []}
+        dict4 = {'dict':{}}
+
+        with open('data.pkl', 'wb') as file1:
+        # Serialize the object and write it to the file
+            pickle.dump(dict1, file1)
+        with open('data.pkl', 'rb') as file1:
+            # Deserialize the object from the file
+            loaded_data1 = pickle.load(file1)
+        
+        self.assertEqual(dict1, loaded_data1)
+
+        with open('data.pkl', 'wb') as file2:
+        # Serialize the object and write it to the file
+            pickle.dump(dict2, file2)
+        with open('data.pkl', 'rb') as file:
+            # Deserialize the object from the file
+            loaded_data2 = pickle.load(file2)
+
+        self.assertEqual(dict2, loaded_data2)
+
+        with open('data.pkl', 'wb') as file3:
+        # Serialize the object and write it to the file
+            pickle.dump(dict3, file3)
+        with open('data.pkl', 'rb') as file3:
+            # Deserialize the object from the file
+            loaded_data3 = pickle.load(file3)
+        
+        self.assertEqual(dict3, loaded_data3)
+
+        with open('data.pkl', 'wb') as file4:
+        # Serialize the object and write it to the file
+            pickle.dump(dict4, file4)
+        with open('data.pkl', 'rb') as file4:
+            # Deserialize the object from the file
+            loaded_data4 = pickle.load(file4)
+
+        self.assertEqual(dict4, loaded_data4)
+
+    def test_tubles(self):
+        tuple1 = ()
+        tuple2 = tuple(x for x in range(random.randint(0,1000)))
+        tuple3 = tuple('Unittesting')
+        tuple4 = (0, (1, (2, (3, (4, (5, (0)))))))
+        tuple5 = (1, 1.2, 'test', True, None)
+        tuple6 = ({}, [])
+
+        with open('data.pkl', 'wb') as file1:
+        # Serialize the object and write it to the file
+            pickle.dump(tuple1, file1)
+        with open('data.pkl', 'rb') as file1:
+            # Deserialize the object from the file
+            loaded_data1 = pickle.load(file1)
+        
+        self.assertEqual(tuple1, loaded_data1)
+
+        with open('data.pkl', 'wb') as file2:
+        # Serialize the object and write it to the file
+            pickle.dump(tuple2, file2)
+        with open('data.pkl', 'rb') as file:
+            # Deserialize the object from the file
+            loaded_data2 = pickle.load(file2)
+
+        self.assertEqual(tuple2, loaded_data2)
+
+        with open('data.pkl', 'wb') as file3:
+        # Serialize the object and write it to the file
+            pickle.dump(tuple3, file3)
+        with open('data.pkl', 'rb') as file3:
+            # Deserialize the object from the file
+            loaded_data3 = pickle.load(file3)
+        
+        self.assertEqual(tuple3, loaded_data3)
+
+        with open('data.pkl', 'wb') as file4:
+        # Serialize the object and write it to the file
+            pickle.dump(tuple4, file4)
+        with open('data.pkl', 'rb') as file4:
+            # Deserialize the object from the file
+            loaded_data4 = pickle.load(file4)
+
+        self.assertEqual(tuple4, loaded_data4)
+
+        with open('data.pkl', 'wb') as file5:
+        # Serialize the object and write it to the file
+            pickle.dump(tuple5, file5)
+        with open('data.pkl', 'rb') as file5:
+            # Deserialize the object from the file
+            loaded_data5 = pickle.load(file5)
+        
+        self.assertEqual(tuple5, loaded_data5)
+
+        with open('data.pkl', 'wb') as file6:
+        # Serialize the object and write it to the file
+            pickle.dump(tuple6, file6)
+        with open('data.pkl', 'rb') as file6:
+            # Deserialize the object from the file
+            loaded_data6 = pickle.load(file6)
+
+        self.assertEqual(tuple6, loaded_data6)
+            
     def test_sets(self):
         s1 = {"Random","Rando","Randy"}
         with open('data.pkl', 'wb') as file:
