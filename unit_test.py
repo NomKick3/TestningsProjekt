@@ -59,7 +59,48 @@ class unit_tests(unittest.TestCase):
         pass
     
     def test_dict(self):
-        pass
+        dict1 = {}
+        dict2 = {'string': 'test', 1:0, 'int': 1, 'float': 1.5, 'bool': True, 'Nan': None}
+        dict3 = {'list': []}
+        dict4 = {'dict':{}}
+
+        with open('data.pkl', 'wb') as file1:
+        # Serialize the object and write it to the file
+            pickle.dump(dict1, file1)
+        with open('data.pkl', 'rb') as file1:
+            # Deserialize the object from the file
+            loaded_data1 = pickle.load(file1)
+        
+        self.assertEqual(dict1, loaded_data1)
+
+        with open('data.pkl', 'wb') as file2:
+        # Serialize the object and write it to the file
+            pickle.dump(dict2, file2)
+        with open('data.pkl', 'rb') as file:
+            # Deserialize the object from the file
+            loaded_data2 = pickle.load(file2)
+
+        self.assertEqual(dict2, loaded_data2)
+
+        with open('data.pkl', 'wb') as file3:
+        # Serialize the object and write it to the file
+            pickle.dump(dict3, file3)
+        with open('data.pkl', 'rb') as file3:
+            # Deserialize the object from the file
+            loaded_data3 = pickle.load(file3)
+        
+        self.assertEqual(dict3, loaded_data3)
+
+        with open('data.pkl', 'wb') as file4:
+        # Serialize the object and write it to the file
+            pickle.dump(dict4, file4)
+        with open('data.pkl', 'rb') as file4:
+            # Deserialize the object from the file
+            loaded_data4 = pickle.load(file4)
+
+        self.assertEqual(dict4, loaded_data4)
+        
+
     
     def test_sets(self):
         pass
