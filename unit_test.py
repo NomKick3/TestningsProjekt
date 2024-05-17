@@ -25,13 +25,13 @@ class unit_tests(unittest.TestCase):
             loaded_data = pickle.load(file)
         self.assetFalse(fuzzer_json.check_equal_list(lst,loaded_data))
 
-    def double_cycle_list(self):
+    def test_double_cycle_list(self):
         pass
 
-    def sets(self):
+    def test_sets(self):
         pass
 
-    def nested_class(self):
+    def test_nested_class(self):
         outer = nested_class.OuterClass()
         inner = outer.InnerClass()
         inner.messege('test')
@@ -55,19 +55,44 @@ class unit_tests(unittest.TestCase):
         self.assertEqual(outer, loaded_data2)
 
 
-
-    def list_test(self):
+    def test_list(self):
         pass
     
-    def dict_test(self):
+    def test_dict(self):
         pass
     
-    def sets_test(self):
+    def test_sets(self):
         pass
 
-    def class_unorganised(self):
-        pass
+    def test_class_unorganised(self):
+        unorg1 = nested_class.Unorganised()
+        unorg1.x = 3
+        unorg1.y = 4
 
+        unorg2 = nested_class.Unorganised()
+        unorg2.y = 4
+        unorg2.x = 3
+
+        with open('data.pkl', 'wb') as file1:
+        # Serialize the object and write it to the file
+            pickle.dump(unorg1, file1)
+        with open('data.pkl', 'wb') as file2:
+        # Serialize the object and write it to the file
+            pickle.dump(unorg2, file2)
+
+        self.assertEqual(file1, file2)
+
+        with open('data.pkl', 'rb') as file1:
+            # Deserialize the object from the file
+            loaded_data1 = pickle.load(file1)
+        with open('data.pkl', 'rb') as file:
+            # Deserialize the object from the file
+            loaded_data2 = pickle.load(file2)
+        
+        self.assertEqual(unorg1, loaded_data1)
+        self.assertEqual(unorg2, loaded_data2)
+
+        
     
 
 
