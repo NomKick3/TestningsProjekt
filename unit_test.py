@@ -138,8 +138,67 @@ class unit_tests(unittest.TestCase):
         self.assertEqual(dict4, loaded_data4)
 
     def test_tubles(self):
-        pass
-    
+        tuple1 = ()
+        tuple2 = tuple(x for x in range(random.randint(0,1000)))
+        tuple3 = tuple('Unittesting')
+        tuple4 = (0, (1, (2, (3, (4, (5, (0)))))))
+        tuple5 = (1, 1.2, 'test', True, None)
+        tuple6 = ({}, [])
+
+        with open('data.pkl', 'wb') as file1:
+        # Serialize the object and write it to the file
+            pickle.dump(tuple1, file1)
+        with open('data.pkl', 'rb') as file1:
+            # Deserialize the object from the file
+            loaded_data1 = pickle.load(file1)
+        
+        self.assertEqual(tuple1, loaded_data1)
+
+        with open('data.pkl', 'wb') as file2:
+        # Serialize the object and write it to the file
+            pickle.dump(tuple2, file2)
+        with open('data.pkl', 'rb') as file:
+            # Deserialize the object from the file
+            loaded_data2 = pickle.load(file2)
+
+        self.assertEqual(tuple2, loaded_data2)
+
+        with open('data.pkl', 'wb') as file3:
+        # Serialize the object and write it to the file
+            pickle.dump(tuple3, file3)
+        with open('data.pkl', 'rb') as file3:
+            # Deserialize the object from the file
+            loaded_data3 = pickle.load(file3)
+        
+        self.assertEqual(tuple3, loaded_data3)
+
+        with open('data.pkl', 'wb') as file4:
+        # Serialize the object and write it to the file
+            pickle.dump(tuple4, file4)
+        with open('data.pkl', 'rb') as file4:
+            # Deserialize the object from the file
+            loaded_data4 = pickle.load(file4)
+
+        self.assertEqual(tuple4, loaded_data4)
+
+        with open('data.pkl', 'wb') as file5:
+        # Serialize the object and write it to the file
+            pickle.dump(tuple5, file5)
+        with open('data.pkl', 'rb') as file5:
+            # Deserialize the object from the file
+            loaded_data5 = pickle.load(file5)
+        
+        self.assertEqual(tuple5, loaded_data5)
+
+        with open('data.pkl', 'wb') as file6:
+        # Serialize the object and write it to the file
+            pickle.dump(tuple6, file6)
+        with open('data.pkl', 'rb') as file6:
+            # Deserialize the object from the file
+            loaded_data6 = pickle.load(file6)
+
+        self.assertEqual(tuple4, loaded_data4)
+            
     def test_sets(self):
         pass
 
