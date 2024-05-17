@@ -69,7 +69,6 @@ class unit_tests(unittest.TestCase):
         self.assertEqual(outer, loaded_data2)
 
     def test_list(self):
-
         empty_list = []
         random_list = [random.randint(0, 100) for _ in range(10)]
         same_value_list = [5] * 10
