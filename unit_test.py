@@ -47,7 +47,7 @@ class unit_tests(unittest.TestCase):
     def test_nested_class(self):
         outer = nested_class.OuterClass()
         inner = outer.InnerClass()
-        inner.messege('test')
+        inner.write_messege('test')
 
         with open('data.pkl', 'wb') as file1:
         # Serialize the object and write it to the file
@@ -66,6 +66,7 @@ class unit_tests(unittest.TestCase):
             loaded_data2 = pickle.load(file2)
 
         self.assertEqual(outer, loaded_data2)
+        os.remove("data.pkl")
 
     def test_list(self):
         pass
@@ -74,7 +75,16 @@ class unit_tests(unittest.TestCase):
         pass
     
     def test_sets(self):
-        pass
+        s1 = {"Random","Rando","Randy"}
+        with open('data.pkl', 'wb') as file:
+        # Serialize the object and write it to the file
+            pickle.dump(s1, file)
+        with open('data.pkl', 'rb') as file:
+            # Deserialize the object from the file
+            loaded_data = pickle.load(file)
+        os.remove("data.pkl")
+
+        self.assertEqual(s1,loaded_data)
 
     def test_class_unorganised(self):
         unorg1 = nested_class.Unorganised()
@@ -106,4 +116,3 @@ class unit_tests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

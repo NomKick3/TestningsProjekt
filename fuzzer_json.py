@@ -83,7 +83,7 @@ def check_equal_list(list1,list2):
     return True
 
 def check_equal_dict(dict1, dict2):
-    if not isinstance(dict1, dict) or not isinstance(dict2, dict):
+    if not (type(dict1) == dict) or not not (type(dict2) == dict):
         return False 
 
     if set(dict1.keys()) != set(dict2.keys()):
