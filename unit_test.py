@@ -3,6 +3,7 @@ import fuzzer_json
 import pickle
 import os
 import nested_class
+import random
 
 class unit_tests(unittest.TestCase):
     def test_cycle_list(self):
@@ -68,7 +69,31 @@ class unit_tests(unittest.TestCase):
         self.assertEqual(outer, loaded_data2)
 
     def test_list(self):
-        pass
+        empty_list = []
+        random_list = [random.randint(0, 100) for _ in range(10)]
+        same_value_list = [5] * 10
+        sorted_list = sorted([3, 1, 4, 1, 5, 9, 2, 6]) 
+        mixed_list = [1, 'apple', 3.14, True, None]
+        nested_list = [[1, 2, 3], ['a', 'b', 'c'], [True, False]]
+        large_list = list(range(10000))
+        negative_list = [-1, -5, -10, -15, -20]
+
+         # Compare pickled lists
+        self.assertTrue(self.compare_pickled(empty_list), "Empty list pickling failed")
+        self.assertTrue(self.compare_pickled(random_list), "Random list pickling failed")
+        self.assertTrue(self.compare_pickled(same_value_list), "Same value list pickling failed")
+        self.assertTrue(self.compare_pickled(sorted_list), "Sorted list pickling failed")
+        self.assertTrue(self.compare_pickled(mixed_list), "Mixed list pickling failed")
+        self.assertTrue(self.compare_pickled(nested_list), "Nested list pickling failed")
+        self.assertTrue(self.compare_pickled(large_list), "Large list pickling failed")
+        self.assertTrue(self.compare_pickled(negative_list), "Negative list pickling failed")       
+
+    def compare_pickled(original):
+        pickled = pickle.dumps(original)
+        loaded = pickle.loads(pickled)
+        if(loaded == original):
+            return True
+        return False  
     
     def test_dict(self):
         dict1 = {}
