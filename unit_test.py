@@ -88,14 +88,12 @@ class unit_tests(unittest.TestCase):
         self.assertTrue(self.compare_pickled(large_list), "Large list pickling failed")
         self.assertTrue(self.compare_pickled(negative_list), "Negative list pickling failed")       
 
-def compare_pickled(original):
-    pickled = pickle.dumps(original)
-    loaded = pickle.loads(pickled)
-    if(loaded == original):
-        return True
-    return False
-
-        
+    def compare_pickled(original):
+        pickled = pickle.dumps(original)
+        loaded = pickle.loads(pickled)
+        if(loaded == original):
+            return True
+        return False  
     
     def test_dict(self):
         dict1 = {}
