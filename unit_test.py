@@ -1,7 +1,7 @@
 import unittest
-import testing
 import fuzzer_json
 import pickle
+import os
 import nested_class
 
 class unit_tests(unittest.TestCase):
@@ -13,7 +13,8 @@ class unit_tests(unittest.TestCase):
         with open('data.pkl', 'rb') as file:
             # Deserialize the object from the file
             loaded_data = pickle.load(file)
-        self.assetFalse(fuzzer_json.check_equal(lst,loaded_data))
+        self.assertTrue(fuzzer_json.check_equal_list(lst,loaded_data),"List")
+        os.remove("data.pkl")
 
     def test_cycle_dict(self):
         lst = fuzzer_json.cykled_dict(0)
@@ -23,13 +24,25 @@ class unit_tests(unittest.TestCase):
         with open('data.pkl', 'rb') as file:
             # Deserialize the object from the file
             loaded_data = pickle.load(file)
-        self.assetFalse(fuzzer_json.check_equal_list(lst,loaded_data))
+        self.assertFalse(fuzzer_json.check_equal_dict(lst,loaded_data),"Dict")
+        os.remove("data.pkl")
 
     def test_double_cycle_list(self):
-        pass
+        list1 = [0]
+        list2 = [1]
+        list3 = [list1,list2]
+        list2.append(list3)
+        list1.append(list2)
 
-    def test_sets(self):
-        pass
+        with open('data.pkl', 'wb') as file:
+        # Serialize the object and write it to the file
+            pickle.dump(list1, file)
+        with open('data.pkl', 'rb') as file:
+            # Deserialize the object from the file
+            loaded_data = pickle.load(file)
+        
+        self.assertEqual(str(list1),str(loaded_data))
+        os.remove("data.pkl")
 
     def test_nested_class(self):
         outer = nested_class.OuterClass()
@@ -53,7 +66,6 @@ class unit_tests(unittest.TestCase):
             loaded_data2 = pickle.load(file2)
 
         self.assertEqual(outer, loaded_data2)
-
 
     def test_list(self):
         pass
@@ -133,7 +145,6 @@ class unit_tests(unittest.TestCase):
         self.assertEqual(unorg1, loaded_data1)
         self.assertEqual(unorg2, loaded_data2)
 
-        
-    
-
+if __name__ == '__main__':
+    unittest.main()
 

@@ -78,7 +78,6 @@ def check_equal_list(list1,list2):
     if list1[0] != list2[0]: return False
     t1_list, t2_list = list1[1], list2[1]
     while t1_list[0] != 0:
-        print(t1_list[0])
         if t1_list[0] != t2_list[0]: return False
         t1_list, t2_list = t1_list[1], t2_list[1]
     return True
@@ -100,9 +99,4 @@ def check_equal_dict(dict1, dict2):
 
 
 if __name__ == "__main__":
-    list = cykled_lst(0)
-
-    if check_equal_list(list,list):
-        print("Amanda är kass")
-    else:
-        print("Amanda är fortfarande kass")
+    pass
