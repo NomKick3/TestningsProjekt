@@ -19,7 +19,7 @@ def random_structure_generator(arg):
             another_one = {str(arg+i): functions[random.randint(0,len(functions)-1)](arg+1)}
     return another_one
 
-def cykled_lst(arg, lst=[],num=10,first = []): #random.randint(0, 1000)
+def cykled_lst(arg, lst=[],num=random.randint(0, 1000)):
     t1_list = lst
     t1_list.append(0)
     t1_list.append([])
@@ -33,15 +33,16 @@ def cykled_lst(arg, lst=[],num=10,first = []): #random.randint(0, 1000)
     
 
 def cykled_dict(arg, dic={}, num=random.randint(0, 10)):
-    if arg == num:
-        dic[arg] = 0
-        return dic
-    else:
-        dic[arg] = {}
-        cykled_dict(arg+1, dic[arg], num)
-        return dic
+    t1_dict = dic
+    t1_dict[0] = {}
+    for i in range(1,num-1):
+        t1_dict = t1_dict[i-1]
+        t1_dict[i] = {}
+    t1_dict[num] = dic
+    return dic
+
     
-functions = [cykled_lst] # random_string_generator, random_structure_generator,
+functions = [cykled_lst] # random_string_generator, random_structure_generator, cykled_dict
 
 def random_data_generator():
     global highest_depth
@@ -51,11 +52,8 @@ def random_data_generator():
     y_dict = {}
     while True:
         j = random.randint(0,len(functions)-1)
-        # print(j)
         y_dict[str(index)] = functions[j](0)
-        # print("hora")
         index += 1
-        # print(highest_depth)
         yield y_dict
 
 def random_number():
