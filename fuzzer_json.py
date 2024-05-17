@@ -4,11 +4,13 @@ import sys
 def random_number_generator(arg): 
     number = random.randint(10**arg,10**arg+1)/random.randint(arg+1**26,arg+1**27)
     return number
+
 def random_string_generator(arg):
     string = ""
     for _ in range(random.randint(0,1000)):
             string.join(random.choice("1234567890!#¤%&/()=?`@£$€{[]}`^*¨'~qwertyuiopåasdfghjklöäzxcvbnmQWERTYUIOPÅASDFGHJKLÖÄZXCVBNM,;.:-_><|§½\n\t\r'*+?"))
     return string
+
 def random_structure_generator(arg):
     global highest_depth
     if arg > highest_depth: highest_depth = arg
@@ -19,7 +21,7 @@ def random_structure_generator(arg):
             another_one = {str(arg+i): functions[random.randint(0,len(functions)-1)](arg+1)}
     return another_one
 
-def cykled_lst(arg, lst=[],num=10,first = []): #random.randint(0, 1000)
+def cykled_lst(arg, lst=[],num=random.randint(0, 1000)):
     t1_list = lst
     t1_list.append(0)
     t1_list.append([])
@@ -31,17 +33,17 @@ def cykled_lst(arg, lst=[],num=10,first = []): #random.randint(0, 1000)
     t1_list.append(lst)
     return lst
     
-
 def cykled_dict(arg, dic={}, num=random.randint(0, 10)):
-    if arg == num:
-        dic[arg] = 0
-        return dic
-    else:
-        dic[arg] = {}
-        cykled_dict(arg+1, dic[arg], num)
-        return dic
+    t1_dict = dic
+    t1_dict[0] = {}
+    for i in range(1,num-1):
+        t1_dict = t1_dict[i-1]
+        t1_dict[i] = {}
+    t1_dict[num] = dic
+    return dic
+
     
-functions = [cykled_lst] # random_string_generator, random_structure_generator,
+functions = [cykled_lst] # random_string_generator, random_structure_generator, cykled_dict
 
 def random_data_generator():
     global highest_depth
@@ -51,11 +53,8 @@ def random_data_generator():
     y_dict = {}
     while True:
         j = random.randint(0,len(functions)-1)
-        # print(j)
         y_dict[str(index)] = functions[j](0)
-        # print("hora")
         index += 1
-        # print(highest_depth)
         yield y_dict
 
 def random_number():
@@ -83,9 +82,21 @@ def check_equal_list(list1,list2):
         t1_list, t2_list = t1_list[1], t2_list[1]
     return True
 
-def check_equal_dict(dict1,dict2):
+def check_equal_dict(dict1, dict2):
+    if not isinstance(dict1, dict) or not isinstance(dict2, dict):
+        return False 
+
+    if set(dict1.keys()) != set(dict2.keys()):
+        return False
     
-    pass
+    for k in dict1:  # Iterate through keys in dict1
+        if isinstance(dict1[k], dict) and isinstance(dict2[k], dict):# If the value is another dictionary, recursively compare dictionaries 
+            if not check_equal_dict(dict1[k], dict2[k]):
+                return False  # If the recursive check fails, return False
+        elif type(dict1[k]) != type(dict2[k]) or dict1[k] != dict2[k]: # If the types of values are different or the values are not equal
+            return False  
+    return True
+
 
 if __name__ == "__main__":
     pass

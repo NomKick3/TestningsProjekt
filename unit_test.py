@@ -2,6 +2,7 @@ import unittest
 import fuzzer_json
 import pickle
 import os
+import nested_class
 
 class unit_tests(unittest.TestCase):
     def test_cycle_list(self):
@@ -43,29 +44,65 @@ class unit_tests(unittest.TestCase):
         self.assertEqual(str(list1),str(loaded_data))
         os.remove("data.pkl")
 
-    def sets(self):
-        set = {}
-        os.remove("data.pkl")
+    def test_nested_class(self):
+        outer = nested_class.OuterClass()
+        inner = outer.InnerClass()
+        inner.messege('test')
 
-    def nested_class(self):
-        os.remove("data.pkl")
-        pass
+        with open('data.pkl', 'wb') as file1:
+        # Serialize the object and write it to the file
+            pickle.dump(inner, file1)
+        with open('data.pkl', 'rb') as file1:
+            # Deserialize the object from the file
+            loaded_data1 = pickle.load(file1)
+        
+        self.assertEqual(inner, loaded_data1)
 
-    def list_test(self):
-        os.remove("data.pkl")
+        with open('data.pkl', 'wb') as file2:
+        # Serialize the object and write it to the file
+            pickle.dump(outer, file2)
+        with open('data.pkl', 'rb') as file:
+            # Deserialize the object from the file
+            loaded_data2 = pickle.load(file2)
+
+        self.assertEqual(outer, loaded_data2)
+
+    def test_list(self):
         pass
     
-    def dict_test(self):
-        os.remove("data.pkl")
+    def test_dict(self):
         pass
     
-    def sets_test(self):
-        os.remove("data.pkl")
+    def test_sets(self):
         pass
 
-    def class_unorganised(self):
-        os.remove("data.pkl")
-        pass
+    def test_class_unorganised(self):
+        unorg1 = nested_class.Unorganised()
+        unorg1.x = 3
+        unorg1.y = 4
+
+        unorg2 = nested_class.Unorganised()
+        unorg2.y = 4
+        unorg2.x = 3
+
+        with open('data.pkl', 'wb') as file1:
+        # Serialize the object and write it to the file
+            pickle.dump(unorg1, file1)
+        with open('data.pkl', 'wb') as file2:
+        # Serialize the object and write it to the file
+            pickle.dump(unorg2, file2)
+
+        self.assertEqual(file1, file2)
+
+        with open('data.pkl', 'rb') as file1:
+            # Deserialize the object from the file
+            loaded_data1 = pickle.load(file1)
+        with open('data.pkl', 'rb') as file:
+            # Deserialize the object from the file
+            loaded_data2 = pickle.load(file2)
+        
+        self.assertEqual(unorg1, loaded_data1)
+        self.assertEqual(unorg2, loaded_data2)
 
 if __name__ == '__main__':
     unittest.main()
