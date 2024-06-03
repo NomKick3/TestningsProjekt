@@ -44,12 +44,13 @@ def cykled_lst(arg, lst=[],num=random.randint(0, 1000)):
     t1_list.append(lst)
     return lst
     
-def cykled_dict(arg, dic={}, num=random.randint(0, 10)):
+def cykled_dict(arg, dic={}, num=random.randint(1, 1000)):
     t1_dict = dic
     t1_dict[0] = {}
-    for i in range(1,num-1):
+    for i in range(1,num):
         t1_dict = t1_dict[i-1]
         t1_dict[i] = {}
+    t1_dict = t1_dict[num-1]
     t1_dict[num] = dic
     return dic
 
@@ -93,23 +94,37 @@ def check_equal_list(list1,list2):
         t1_list, t2_list = t1_list[1], t2_list[1]
     return True
 
-def check_equal_dict(dict1, dict2):
-    if not (type(dict1) == dict) or not not (type(dict2) == dict):
-        return False 
+def check_equal_dict(dict1, dict2,depth = 0):
+    # if depth > 100:
+    #     return True
+
+    if not (type(dict1) == dict) or not (type(dict2) == dict):
+        return False
 
     if set(dict1.keys()) != set(dict2.keys()):
         return False
     
-    for k in dict1:  # Iterate through keys in dict1
-        if isinstance(dict1[k], dict) and isinstance(dict2[k], dict):# If the value is another dictionary, recursively compare dictionaries 
-            if not check_equal_dict(dict1[k], dict2[k]):
-                return False  # If the recursive check fails, return False
-        elif type(dict1[k]) != type(dict2[k]) or dict1[k] != dict2[k]: # If the types of values are different or the values are not equal
-            return False  
+    # for k in dict1:  # Iterate through keys in dict1
+    #     if (type(dict1[k]) ==  dict) and (type(dict2[k]) == dict):# If the value is another dictionary, recursively compare dictionaries 
+    #         depth += 1
+    #         if not check_equal_dict(dict1[k], dict2[k],depth):
+    #             return False  # If the recursive check fails, return False
+    #     elif type(dict1[k]) != type(dict2[k]) or dict1[k] != dict2[k]: # If the types of values are different or the values are not equal
+    #         return False
+        
+    key = int(list(dict1.keys())[0])
+    t1_dict, t2_dict = dict1[key], dict2[key]
+    while int(list(t1_dict.keys())[0]) != 0:
+        if set(t1_dict.keys()) != set(t2_dict.keys()): return False
+        key = int(list(t1_dict.keys())[0])
+        t1_dict, t2_dict = t1_dict[key], t2_dict[key]
     return True
+    # return True
 
 
 if __name__ == "__main__":
     global highest_depth
     highest_depth = 0
-    print(random_list_generator(0))
+    cykle = cykled_dict(0)
+    cykle2 = cykled_dict(0)
+    print(check_equal_dict(cykle,cykle2))

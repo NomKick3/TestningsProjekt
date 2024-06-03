@@ -1,5 +1,5 @@
 import unittest
-import fuzzer_json
+import fuzzer_pickle
 import pickle
 import os
 import nested_class
@@ -9,26 +9,26 @@ import sys
 sys.setrecursionlimit(10000)
 class unit_tests(unittest.TestCase):
     def test_cycle_list(self):
-        lst = fuzzer_json.cykled_lst(0)
+        lst = fuzzer_pickle.cykled_lst(0)
         with open('data.pkl', 'wb') as file:
         # Serialize the object and write it to the file
             pickle.dump(lst, file)
         with open('data.pkl', 'rb') as file:
             # Deserialize the object from the file
             loaded_data = pickle.load(file)
-        self.assertTrue(fuzzer_json.check_equal_list(lst,loaded_data),"List")
         os.remove("data.pkl")
+        self.assertTrue(fuzzer_pickle.check_equal_list(lst,loaded_data),"List")
 
     def test_cycle_dict(self):
-        lst = fuzzer_json.cykled_dict(0)
+        lst = fuzzer_pickle.cykled_dict(0)
         with open('data.pkl', 'wb') as file:
         # Serialize the object and write it to the file
             pickle.dump(lst, file)
         with open('data.pkl', 'rb') as file:
             # Deserialize the object from the file
             loaded_data = pickle.load(file)
-        self.assertFalse(fuzzer_json.check_equal_dict(lst,loaded_data),"Dict")
         os.remove("data.pkl")
+        self.assertTrue(fuzzer_pickle.check_equal_dict(lst,loaded_data),"Dict")
 
     def test_double_cycle_list(self):
         list1 = [0]
@@ -44,8 +44,8 @@ class unit_tests(unittest.TestCase):
             # Deserialize the object from the file
             loaded_data = pickle.load(file)
         
-        self.assertEqual(str(list1),str(loaded_data))
         os.remove("data.pkl")
+        self.assertEqual(str(list1),str(loaded_data))
 
     def test_nested_class(self):
         outer = nested_class.OuterClass()
@@ -58,7 +58,7 @@ class unit_tests(unittest.TestCase):
         with open('data.pkl', 'rb') as file1:
             # Deserialize the object from the file
             loaded_data1 = pickle.load(file1)
-        
+        os.remove("data.pkl")
         self.assertEqual(inner, loaded_data1)
 
         with open('data.pkl', 'wb') as file2:
@@ -68,8 +68,8 @@ class unit_tests(unittest.TestCase):
             # Deserialize the object from the file
             loaded_data2 = pickle.load(file2)
 
-        self.assertEqual(outer, loaded_data2)
         os.remove("data.pkl")
+        self.assertEqual(outer, loaded_data2)
 
     def test_list(self):
         empty_list = []
@@ -90,14 +90,12 @@ class unit_tests(unittest.TestCase):
         self.assertTrue(self.compare_pickled(nested_list), "Nested list pickling failed")
         self.assertTrue(self.compare_pickled(large_list), "Large list pickling failed")
         self.assertTrue(self.compare_pickled(negative_list), "Negative list pickling failed")
-        os.remove("data.pkl")     
 
     def compare_pickled(self,original):
         pickled = pickle.dumps(original)
         loaded = pickle.loads(pickled)
         if(loaded == original):
             return True
-        os.remove("data.pkl")
         return False
     
     def test_pick_pickle(self):
@@ -120,7 +118,7 @@ class unit_tests(unittest.TestCase):
         with open('data.pkl', 'rb') as file1:
             # Deserialize the object from the file
             loaded_data1 = pickle.load(file1)
-        
+        os.remove("data.pkl")
         self.assertEqual(dict1, loaded_data1)
 
         with open('data.pkl', 'wb') as file2:
@@ -129,7 +127,7 @@ class unit_tests(unittest.TestCase):
         with open('data.pkl', 'rb') as file2:
             # Deserialize the object from the file
             loaded_data2 = pickle.load(file2)
-
+        os.remove("data.pkl")
         self.assertEqual(dict2, loaded_data2)
 
         with open('data.pkl', 'wb') as file3:
@@ -138,7 +136,7 @@ class unit_tests(unittest.TestCase):
         with open('data.pkl', 'rb') as file3:
             # Deserialize the object from the file
             loaded_data3 = pickle.load(file3)
-        
+        os.remove("data.pkl")
         self.assertEqual(dict3, loaded_data3)
 
         with open('data.pkl', 'wb') as file4:
@@ -148,8 +146,8 @@ class unit_tests(unittest.TestCase):
             # Deserialize the object from the file
             loaded_data4 = pickle.load(file4)
 
-        self.assertEqual(dict4, loaded_data4)
         os.remove("data.pkl")
+        self.assertEqual(dict4, loaded_data4)
 
     def test_tuples(self):
         tuple1 = ()
@@ -165,7 +163,7 @@ class unit_tests(unittest.TestCase):
         with open('data.pkl', 'rb') as file1:
             # Deserialize the object from the file
             loaded_data1 = pickle.load(file1)
-        
+        os.remove("data.pkl")
         self.assertEqual(tuple1, loaded_data1)
 
         with open('data.pkl', 'wb') as file2:
@@ -174,7 +172,7 @@ class unit_tests(unittest.TestCase):
         with open('data.pkl', 'rb') as file2:
             # Deserialize the object from the file
             loaded_data2 = pickle.load(file2)
-
+        os.remove("data.pkl")
         self.assertEqual(tuple2, loaded_data2)
 
         with open('data.pkl', 'wb') as file3:
@@ -183,7 +181,7 @@ class unit_tests(unittest.TestCase):
         with open('data.pkl', 'rb') as file3:
             # Deserialize the object from the file
             loaded_data3 = pickle.load(file3)
-        
+        os.remove("data.pkl")
         self.assertEqual(tuple3, loaded_data3)
 
         with open('data.pkl', 'wb') as file4:
@@ -192,7 +190,7 @@ class unit_tests(unittest.TestCase):
         with open('data.pkl', 'rb') as file4:
             # Deserialize the object from the file
             loaded_data4 = pickle.load(file4)
-
+        os.remove("data.pkl")
         self.assertEqual(tuple4, loaded_data4)
 
         with open('data.pkl', 'wb') as file5:
@@ -201,7 +199,7 @@ class unit_tests(unittest.TestCase):
         with open('data.pkl', 'rb') as file5:
             # Deserialize the object from the file
             loaded_data5 = pickle.load(file5)
-        
+        os.remove("data.pkl")
         self.assertEqual(tuple5, loaded_data5)
 
         with open('data.pkl', 'wb') as file6:
@@ -211,8 +209,8 @@ class unit_tests(unittest.TestCase):
             # Deserialize the object from the file
             loaded_data6 = pickle.load(file6)
 
-        self.assertEqual(tuple6, loaded_data6)
         os.remove("data.pkl")
+        self.assertEqual(tuple6, loaded_data6)
             
     
     def test_sets(self):
@@ -251,10 +249,10 @@ class unit_tests(unittest.TestCase):
         with open('data.pkl', 'rb') as file:
             # Deserialize the object from the file
             loaded_data2 = pickle.load(file2)
+        os.remove("data.pkl")
         
         self.assertEqual(unorg1, loaded_data1)
         self.assertEqual(unorg2, loaded_data2)
-        os.remove("data.pkl")
 
     def test_types(self):
         none = None # None
@@ -264,19 +262,15 @@ class unit_tests(unittest.TestCase):
         number = 137848345 # Integers
         decimal_number = 132123.123123123 # Float point numbers
         cnumber = 5 + 4j # ??? Complex Numbers
-        sanntext = "Amanda är dryg som fan" # Strings
+        sanntext = "TeSt StrInG JaG vEt IntE" # Strings
         brb = bytes('bytestesting', 'utf-8') # Bytes
         brb_array = bytearray([1, 2 ,3, 4])# Byte Arrays
         types = [none,tf,notcircle,func,number,decimal_number,cnumber,sanntext,brb,brb_array]
         names = ["None","Bool","Ellipsis","NotImplemented","Int","Float","Complex","String","Bytes","Byte Array"]
-        with open("data.pkl","w") as file:
-            for type,name in zip(types,names):
-                pickle.dump(type,file)
-                loaded_data = pickle.load(file)
-                self.assertEqual(type, loaded_data, name)
-
-
-        os.remove("data.pkl")
+        for type,name in zip(types,names):
+            pickled = pickle.dumps(type)
+            loaded_data = pickle.loads(pickled)
+            self.assertEqual(type, loaded_data, name)
 
 if __name__ == '__main__':
     unittest.main()
